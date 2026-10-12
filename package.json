@@ -1,0 +1,23 @@
+{
+  "name": "tessera",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+    "@swc/cli": "^0.8.1",
+    "@swc/core": "^1.16.13",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1",
+    "pg-hstore": "^2.3.4",
+    "zod": "^4.6.5"
+  }
+}
