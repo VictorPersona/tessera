@@ -1,4 +1,5 @@
-import healthRoute from "../modules/health/health.route.js";
+import healthzRoute from "../modules/health/healthz.route.js";
 import type { Route } from "./routes.types.js";
 
-export const routes:Route[] = [healthRoute];
+export const PublicRoutes:Route[] = [healthzRoute];
+export const AuthenticatedRoutes:Route[] = []
