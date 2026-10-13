@@ -1,17 +1,21 @@
 import type { NextFunction, Request, Response } from "express";
-import { ErrorData, ResponseEnvelope } from "./response.js";
+import { AppError } from "./response.js";
 
 export const authenticate = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const token =
-      req.header("Authorization")?.split(" ")[1]?.toString() 
-    if (!token){
-    throw new ResponseEnvelope({error:new ErrorData({statusCode:401,errorMsg:"Authentication Token not available. Please login"})});
+    const token = req.header("Authorization")?.split(" ")[1]?.toString();
+    if (!token) {
+      throw new AppError(
+        401,
+        "UNAUTHENTICATED",
+        "Authentication Token not available. Please login",
+      );
     }
+    req.user = { token };
     next();
   } catch (error) {
     next(error);
