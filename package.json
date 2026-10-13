@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --noEmit && swc apps -d dist",
     "start": "node dist/apps/index.js",
-    "dev": "nodemon --watch src --ext ts --exec \"pnpm build && pnpm start\""
+    "dev": "nodemon --watch apps --ext ts --exec \"pnpm build && pnpm start\""
   },
   "type": "module",
   "keywords": [],
