@@ -1,25 +1,15 @@
 import js from "@eslint/js";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
+
+const pgRegisteredPath = {
+  name: "pg",
+  message:
+    "pg may only be imported inside packages/db and the two composition roots: apps/api/src/main.ts and apps/worker/src/main.ts. Nothing else may import it directly.",
+};
+
 export default defineConfig(
   { ignores: ["dist/**/*"] },
-  {
-    files: ["apps/**/*"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [
-            {
-              name: "pg",
-              message:
-                "pg may only be imported inside packages/db and the two composition rootes, apps/api/src/main.ts and apps/worker/src/main.ts. Nothing else may import it directly",
-            },
-          ],
-        },
-      ],
-    },
-  },
   {
     files: ["**/*.{js,ts}"],
 
@@ -32,15 +22,30 @@ export default defineConfig(
       },
     },
   },
+
+  {
+    files: ["apps/**/*"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [pgRegisteredPath],
+        },
+      ],
+    },
+  },
+
   {
     files: ["**/*.routes.*"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
+          paths: [pgRegisteredPath],
           patterns: [
             {
               group: ["**/*.repository.*", "**/*.schema.*", "**/*.queries.*"],
+              allowTypeImports: true,
               message:
                 "routes must call from a service,not from repository, schema or queries",
             },
@@ -56,6 +61,7 @@ export default defineConfig(
         "error",
         {
           paths: [
+            pgRegisteredPath,
             {
               name: "express",
               message:
@@ -66,14 +72,13 @@ export default defineConfig(
             {
               group: ["**/*.routes.*", "**/*.service.*"],
               message:
-                "repository must call from the schmea object, dependencies only point downward",
+                "repository must call from the schmea object,please pass the data inside the functions to access them. Dependencies only point downward",
             },
           ],
         },
       ],
     },
   },
-
   {
     files: [
       "**/packages/db/**/*",
@@ -81,7 +86,7 @@ export default defineConfig(
       "apps/worker/src/main.*",
     ],
     rules: {
-      "no-restricted-imports": "off",
+      "no-restricted-imports": ["off"],
     },
   },
 );

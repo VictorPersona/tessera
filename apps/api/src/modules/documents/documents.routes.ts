@@ -5,7 +5,7 @@ import {
   type Response,
 } from "express";
 import { Route } from "../../routes/routes.types.js";
-import documentsRepository from "./documents.repository.js";
+
 const router = Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
