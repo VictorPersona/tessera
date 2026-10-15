@@ -38,6 +38,7 @@ export const registerMiddlewares = (app: Application) => {
       res
         .status(500)
         .json({ error: { code: "INTERNAL", message: "Something went wrong" } });
+        next();
     }
   });
 };

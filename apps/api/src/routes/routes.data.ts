@@ -11,6 +11,6 @@ export const AuthenticatedRoutes:Route[] = [documentsRoutes]
 export const AuthRouter:Router = Router();
 AuthRouter.use(authenticate)
 AuthRouter.use(resolveTenant)
-for(let route of AuthenticatedRoutes){
+for(const route of AuthenticatedRoutes){
     AuthRouter.use(route.path,route.router);
 }
