@@ -100,6 +100,7 @@ export default defineConfig(
     files: [
       "**/packages/db/**/*",
       "apps/api/app.*",
+      "apps/index.*",
       "apps/worker/src/main.*",
     ],
     rules: {
