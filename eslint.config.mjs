@@ -5,7 +5,7 @@ import tseslint from "typescript-eslint";
 const pgRegisteredPath = {
   name: "pg",
   message:
-    "pg may only be imported inside packages/db and the two composition roots: apps/api/src/main.ts and apps/worker/src/main.ts. Nothing else may import it directly.",
+    'pg may only be imported inside packages/db and the two composition roots: "apps/api/app.*" "apps/index.*","apps/worker/src/main.*", Nothing else may import it directly.',
 };
 
 const tesseraDBRegisteredPath = {
