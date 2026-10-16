@@ -8,6 +8,11 @@ const pgRegisteredPath = {
     "pg may only be imported inside packages/db and the two composition roots: apps/api/src/main.ts and apps/worker/src/main.ts. Nothing else may import it directly.",
 };
 
+const tesseraDBRegisteredPath = {
+  name: "@tessera/db",
+  message:
+    "Imports from @tessera/db may only be imported inside the repository and query files. Nothing else may import it directly",
+};
 export default defineConfig(
   { ignores: ["dist/**/*"] },
   {
@@ -24,12 +29,12 @@ export default defineConfig(
   },
 
   {
-    files: ["apps/**/*"],
+    files: ["**/*"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
-          paths: [pgRegisteredPath],
+          paths: [pgRegisteredPath, tesseraDBRegisteredPath],
         },
       ],
     },
@@ -41,7 +46,7 @@ export default defineConfig(
       "no-restricted-imports": [
         "error",
         {
-          paths: [pgRegisteredPath],
+          paths: [pgRegisteredPath, tesseraDBRegisteredPath],
           patterns: [
             {
               group: ["**/*.repository.*", "**/*.schema.*", "**/*.queries.*"],
@@ -65,16 +70,28 @@ export default defineConfig(
             {
               name: "express",
               message:
-                "repository must call from the schema object, dependencies only point downward",
+                " please pass the data inside the functions to access them. dependencies only point downward",
             },
           ],
           patterns: [
             {
               group: ["**/*.routes.*", "**/*.service.*"],
               message:
-                "repository must call from the schmea object,please pass the data inside the functions to access them. Dependencies only point downward",
+                "please pass the data inside the functions to access them. Dependencies only point downward",
             },
           ],
+        },
+      ],
+    },
+  },
+
+  {
+    files: ["**/*.queries.*"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [pgRegisteredPath],
         },
       ],
     },
@@ -82,7 +99,7 @@ export default defineConfig(
   {
     files: [
       "**/packages/db/**/*",
-      "apps/api/src/main.*",
+      "apps/api/app.*",
       "apps/worker/src/main.*",
     ],
     rules: {
