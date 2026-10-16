@@ -1,8 +1,7 @@
-
 ## Layout
 
 This repo follows the modular repository structure where each feature gets its own module.
-The major file suffixes are .routes for the api routes registered on that module, .service where the logic lives, .repository where the methods are provided to talk to the tables related to the feature, .types contains the typescript types which are used in the feature module. .validator contains the validator, which will be zod based, the .constants file contains the constant used inside the module and .queries contains the raw sql queires which are executed in the repository layer.
+The major file suffixes are .routes for the api routes registered on that module, .service where the logic lives, .repository where the methods are provided to talk to the tables related to the feature,while are in the .schema files , .types contains the typescript types which are used in the feature module. .validator contains the validator, which will be zod based, the .constants file contains the constant used inside the module and .queries contains the raw sql queires which are executed in the repository layer.
 
 Other shared Functions and Middlewares live in the utils folder.
 
@@ -24,3 +23,20 @@ For an error we didn't plan for the default code is 500. The Response Envelope w
 To add a public route, we have to first add the router for that in the route data's public route array, all the public routers are added to that route. For teneat route which are going to require a authentication middleware and teneat resolution middleware will be added to the authenticatedRoutes array.
 The feature never attaches its own auth middleware, cause they are handled at the routes level so that each feature doesn't have to add them.
 As tenat routes are authenticated, they live in the v1 parent path, any route which is neither public route nor has the auth prefix(v1), they are sent the 404 on purpose. Also we check the route path, before adding them to the main router, so that no duplicate paths are added
+
+## Import rules (enforced by lint)
+
+To better facilate the checks of whether the Inter layer communication between modules is following the guidelines , so to enforce them ESlint is being used, and the rules live in eslint.config.mjsand --print-config <file> shows what applies to a file;
+
+Current ESLINT Rules
+
+| File       | Banned                                               |
+| ---------- | ---------------------------------------------------- |
+| routes     | pg, @tessera/db, and repository/schema/queries files |
+| repository | pg, express, and routes/service files                |
+| service    | pg, @tessera/db                                      |
+| queries    | pg only                                              |
+
+Type only imports are allowed cause we are working with typescript, so it will allow it to understand.
+
+The core list is a deny list, so for the files in the object the values which are there are the restrictions which constitue the deny list.
