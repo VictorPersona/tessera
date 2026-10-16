@@ -9,7 +9,7 @@ import { Route } from "../../routes/routes.types.js";
 const router = Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
-  const documents: any[] = [];
+  const documents: object[] = [];
   res.status(200).json(documents);
 
   next();
