@@ -8,17 +8,24 @@ const pgRegisteredPath = {
     'pg may only be imported inside packages/db and the two composition roots: "apps/api/app.*" "apps/index.*","apps/worker/src/main.*", Nothing else may import it directly.',
 };
 
-const tesseraDBRegisteredPath = {
-  name: "@tessera/db",
+// const tesseraDBRegisteredPath = {
+//   name: "@tessera/db",
+//   message:
+//     "Imports from @tessera/db may only be imported inside the repository and query files. Nothing else may import it directly",
+// };
+
+const tesseraDBRegisteredPattern = {
+  group: ["**/packages/db/**", "!**/packages/db/public.**"],
+  allowTypeImports: true,
   message:
-    "Imports from @tessera/db may only be imported inside the repository and query files. Nothing else may import it directly",
+    "Imports from tessera/db may only be imported inside the repository and query files. Nothing else may import it directly",
 };
 export default defineConfig(
   { ignores: ["dist/**/*"] },
   {
     files: ["**/*.{js,ts}"],
 
-    extends: [js.configs.recommended, tseslint.configs.recommended],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -26,15 +33,28 @@ export default defineConfig(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+        },
+      ],
+    },
   },
 
   {
     files: ["**/*"],
+
     rules: {
       "no-restricted-imports": [
         "error",
         {
-          paths: [pgRegisteredPath, tesseraDBRegisteredPath],
+          paths: [pgRegisteredPath],
+          patterns: [tesseraDBRegisteredPattern],
         },
       ],
     },
@@ -46,7 +66,7 @@ export default defineConfig(
       "no-restricted-imports": [
         "error",
         {
-          paths: [pgRegisteredPath, tesseraDBRegisteredPath],
+          paths: [pgRegisteredPath],
           patterns: [
             {
               group: ["**/*.repository.*", "**/*.schema.*", "**/*.queries.*"],
@@ -54,6 +74,7 @@ export default defineConfig(
               message:
                 "routes must call from a service,not from repository, schema or queries",
             },
+            tesseraDBRegisteredPattern,
           ],
         },
       ],
