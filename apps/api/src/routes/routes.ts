@@ -26,7 +26,7 @@ export const registerMiddlewares = (app: Application) => {
       next(error);
     }
   });
-  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
     if (err instanceof AppError) {
       res.status(err.statusCode).json({
         error: {
@@ -38,7 +38,7 @@ export const registerMiddlewares = (app: Application) => {
       res
         .status(500)
         .json({ error: { code: "INTERNAL", message: "Something went wrong" } });
-        next();
+      console.error(err);
     }
   });
 };
