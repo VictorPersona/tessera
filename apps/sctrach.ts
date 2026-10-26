@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import {
-  createSystemExecutor,
+  withSystem,
   type SystemExecutor,
   type TenantExecutor,
 } from "../packages/db/executor.js";
@@ -25,7 +25,7 @@ const tenantExecutor: TenantExecutor = {
   [brand]: true as const,
 };
 
-const systemExecutorObj: SystemExecutor = await createSystemExecutor();
+const systemExecutorObj: SystemExecutor = await withSystem();
 // @ts-expect-error  A tenant function should only take a Tenant Executor
 createTenant({ name: "Gaurav" }, systemExecutorObj);
 
