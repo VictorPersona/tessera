@@ -4,6 +4,8 @@ const TENANT_BRAND: unique symbol = Symbol("tenant");
 
 const SYSTEM_BRAND: unique symbol = Symbol("system");
 
+
+
 export type TenantExecutor = {
   tenantId: string;
   readonly [TENANT_BRAND]: true;
@@ -23,7 +25,7 @@ export const withTenant = async (tenantId: string): Promise<TenantExecutor> => {
     PoolClient: await createConnection(),
   };
 };
-export const createSystemExecutor = async (): Promise<SystemExecutor> => {
+export const withSystem = async (): Promise<SystemExecutor> => {
   return {
     [SYSTEM_BRAND]: true as const,
     PoolClient: await createConnection(),
