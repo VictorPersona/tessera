@@ -1,9 +1,9 @@
 import { Pool } from "pg";
 import {
-  withSystem,
   type SystemExecutor,
   type TenantExecutor,
-} from "../packages/db/executor.js";
+  withSystem,
+} from "./executor.js";
 
 const createTenant = (
   tenantDetails: { name: string },
@@ -18,7 +18,7 @@ const client = await pool.connect();
 
 const brand = Symbol("tenant");
 
-const tenantExecutor: TenantExecutor = {
+const _tenantExecutor: TenantExecutor = {
   PoolClient: client,
   tenantId: "tenant-123",
   // @ts-expect-error Forged tenantExecutors should not work
