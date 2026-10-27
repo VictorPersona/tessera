@@ -1,9 +1,5 @@
 import { Pool } from "pg";
-import {
-  type SystemExecutor,
-  type TenantExecutor,
-  withSystem,
-} from "./executor.js";
+import { withSystem, type TenantExecutor } from "./executor.js";
 
 const createTenant = (
   tenantDetails: { name: string },
@@ -24,12 +20,12 @@ const _tenantExecutor: TenantExecutor = {
   // @ts-expect-error Forged tenantExecutors should not work
   [brand]: true as const,
 };
+await withSystem(async (systemExecutorObj) => {
+  // @ts-expect-error  A tenant function should only take a Tenant Executor
+  createTenant({ name: "Gaurav" }, systemExecutorObj);
 
-const systemExecutorObj: SystemExecutor = await withSystem();
-// @ts-expect-error  A tenant function should only take a Tenant Executor
-createTenant({ name: "Gaurav" }, systemExecutorObj);
+  //@ts-expect-error The raw pool must not be accepted
+  createTenant({ name: "Gaurav" }, pool);
 
-//@ts-expect-error The raw pool must not be accepted
-createTenant({ name: "Gaurav" }, pool);
-
-client.release();
+  client.release();
+});
