@@ -23,9 +23,9 @@ const _tenantExecutor: TenantExecutor = {
 await withSystem(async (systemExecutorObj) => {
   // @ts-expect-error  A tenant function should only take a Tenant Executor
   createTenant({ name: "Gaurav" }, systemExecutorObj);
-
-  //@ts-expect-error The raw pool must not be accepted
-  createTenant({ name: "Gaurav" }, pool);
-
-  client.release();
 });
+
+//@ts-expect-error The raw pool must not be accepted
+createTenant({ name: "Gaurav" }, pool);
+
+client.release();
