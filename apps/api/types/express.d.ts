@@ -1,9 +1,10 @@
 declare global {
   namespace Express {
     interface Request {
-      user?: object
+      user?: object;
+      tenantId?: string;
     }
   }
 }
 
-export {}
+export {};

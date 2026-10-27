@@ -18,7 +18,17 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
         "BAD_REQUEST",
         "The provided ID must be a valid non-empty string.",
       );
-    const documents = await documentsService.getDocument(req.params.id);
+    if (!req.tenantId) {
+      throw new AppError(
+        500,
+        "INTERNAL_SERVER_ERROR",
+        "Tenant context is missing. Please try again later.",
+      );
+    }
+    const documents = await documentsService.getDocument(
+      req.tenantId,
+      req.params.id,
+    );
     res.status(200).json(documents);
   } catch (error) {
     next(error);
