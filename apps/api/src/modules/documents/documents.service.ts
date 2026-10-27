@@ -1,10 +1,11 @@
 import type { TenantExecutor } from "../../../../../packages/db/executor.js";
 import publicDb from "../../../../../packages/db/public.db.js";
+import jobsRepository from "../jobs/jobs.repository.js";
 import { documentRepository } from "./documents.repository.js";
 
-const getDocument = async (id: string) => {
+const getDocument = async (tenantId: string, id: string) => {
   return await publicDb.withTenant(
-    "Tenant1",
+    tenantId,
     async (executor: TenantExecutor) => {
       const documentRepo = documentRepository(executor);
 
@@ -18,7 +19,10 @@ const createDocument = async (tenantId: string, input: string) => {
     tenantId,
     async (executor: TenantExecutor) => {
       const documentRepo = documentRepository(executor);
-      return await documentRepo.createDocument(input);
+      const jobRepo = jobsRepository(executor);
+
+      await documentRepo.createDocument(input);
+      return await jobRepo.createJob(input);
     },
   );
 };
