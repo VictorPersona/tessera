@@ -9,7 +9,7 @@ const getDocument = async (id: string) => {
 
     return await documentRepo.readDocument(id);
   } finally {
-    publicDb.releaseTenant(executor);
+    publicDb.releaseExecutor(executor);
   }
 };
 

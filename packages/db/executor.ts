@@ -32,6 +32,6 @@ export const withSystem = async (): Promise<SystemExecutor> => {
   };
 };
 
-export const releaseTenant = (Executor: TenantExecutor | SystemExecutor) => {
+export const releaseExecutor = (Executor: TenantExecutor | SystemExecutor) => {
   Executor.PoolClient.release();
 };

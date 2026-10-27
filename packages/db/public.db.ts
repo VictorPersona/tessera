@@ -1,7 +1,7 @@
-import { releaseTenant, withSystem, withTenant } from "./executor.js";
+import { releaseExecutor, withSystem, withTenant } from "./executor.js";
 
 export default {
   withTenant,
   withSystem,
-  releaseTenant,
+  releaseExecutor,
 };
