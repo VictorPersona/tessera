@@ -8,8 +8,14 @@ const readDocument = async (documentId: string) => {
  return await executor.PoolClient.query(text,values)
 };
 
+const createDocument = async(data:string)=>{
+  const text = 'INSERT into documents(data) values($1)';
+  const values = [data];
+  return await executor.PoolClient.query(text,values);
+}
 return {
-  readDocument
+  readDocument,
+  createDocument
 }
 }
 
