@@ -6,14 +6,6 @@ Accepted
 
 ## Context
 
-<!-- - Functions which call the database should not be exposed and used wontonly anywhere, a pattern should be followed by the project which decides where the functions should be called and imported.
-<!-- - Due to multi tenant structure of the project, we want the database queries to be scoped to the tenant. For that each of the database calls done in each service call should be executed in a scoped tenant client, where the tenant Id is supplied to each call in advance  -->
-<!-- - In a multi tenant architecutre, if database calls can be done from one client and have the possibility of changing the data of another client
-- Any file can import the database call functions from repository and call them. Therefore a change can happen through a code path nobody reviwed. -->
-<!-- - The database calls in a service should be using the same connection client, so that they are isolated from other tenants and also so that if they are envolped in a transaction they will be running on the same client -->
-<!-- - If the database calls for a single service a made on whatever connection client is available then database function calls for a single service can run on differnet connection client therby making the transactions useless   -->
-<!-- - This transaction and the pool client should be provided through a central library rather than being created by each service by itself in whatever manner  -->
-<!-- - If each service file creates its own transaction object then it can modify it, where it doesn't have the permission to and add data to it -->
 
 - Tessera is multi-tenant: every tenant's rows live in the same tables. A query
   that runs without the tenant set can read or change another tenant's data.
@@ -34,11 +26,7 @@ Accepted
   `ON CONFLICT`) has to be visible and explainable, not generated behind an
   abstraction.
 
-<!-- ##  Decisions
 
-- This project will be using raw pg instead of kysely, seqeulize or other ORMs because having raw pg will help in better understanding what is happening under the hood.
-- All the transactions will be through an create Executor function , which are all branded therby stopping someone from creating their own , which will be only available to import from the public files and inside the service files only.
-- All calls in repositories will be made available through a factory method which will take the executor object as argument while creating the factory. -->
 
 ## Decision
 
@@ -77,11 +65,7 @@ reach the pool itself.
 **Error translation:** not decided here. Repositories currently let `pg`
 errors pass through unchanged; typed error translation is Stage 00.5.
 
-## Consequences
-<!-- 
-- Using raw pg will loose the type safety as types will have to be manually configured.
-- Strict type level import boundary rules will be enforced by the linter.
-- All database calls in a service will be through the same pool client -->
+
 ## Consequences
 
 **What we gave up**
