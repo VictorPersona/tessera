@@ -7,7 +7,7 @@ Other shared Functions and Middlewares live in the utils folder.
 
 ## Inter Communication between modules
 
-All connections to the modules must be done through the service layer only. The imports between each layer will be from layer to layer. Only the service layer can import the repository layer, only the routes layer can import the service layer, and so on.
+All connections to the modules must be done through the service layer only. A service may call another module's repository when both writes have to be in one transaction. The imports between each layer will be from layer to layer. Only the service layer can import the repository layer, only the routes layer can import the service layer, and so on.
 
 ## Transactions
 
