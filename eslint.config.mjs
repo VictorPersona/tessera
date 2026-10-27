@@ -14,12 +14,20 @@ const pgRegisteredPath = {
 //     "Imports from @tessera/db may only be imported inside the repository and query files. Nothing else may import it directly",
 // };
 
-const tesseraDBRegisteredPattern = {
+const tesseraDBRegisteredPatternAllowed = {
   group: ["**/packages/db/**", "!**/packages/db/public.**"],
   allowTypeImports: true,
   message:
-    "Imports from tessera/db may only be imported inside the repository and query files. Nothing else may import it directly",
+    "Imports from tessera/db may only be imported inside the service and query files. Nothing else may import it directly",
 };
+
+const tesseraDBRegisteredPattern = {
+  group: ["**/packages/db/**"],
+  allowTypeImports: true,
+  message:
+    "Imports from tessera/db may only be imported inside the service and query files. Nothing else may import it directly",
+};
+
 export default defineConfig(
   { ignores: ["dist/**/*"] },
   {
@@ -74,8 +82,20 @@ export default defineConfig(
               message:
                 "routes must call from a service,not from repository, schema or queries",
             },
+
             tesseraDBRegisteredPattern,
           ],
+        },
+      ],
+    },
+  },
+  {
+    files: ["**/*service.*"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [tesseraDBRegisteredPatternAllowed],
         },
       ],
     },
@@ -100,6 +120,7 @@ export default defineConfig(
               message:
                 "please pass the data inside the functions to access them. Dependencies only point downward",
             },
+            tesseraDBRegisteredPattern,
           ],
         },
       ],
@@ -113,6 +134,7 @@ export default defineConfig(
         "error",
         {
           paths: [pgRegisteredPath],
+          patterns: [tesseraDBRegisteredPatternAllowed],
         },
       ],
     },
