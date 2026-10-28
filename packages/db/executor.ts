@@ -16,6 +16,8 @@ export type SystemExecutor = {
 const pool = new Pool();
 const createConnection = async () => await pool.connect();
 
+export const closePool = async () => await pool.end();
+
 const runTransaction = async <T, E extends TenantExecutor | SystemExecutor>(
   executor: E,
   transactionToRun: (executor: E) => Promise<T>,
