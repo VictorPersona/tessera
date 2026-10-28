@@ -1,5 +1,5 @@
 import { Router } from "express";
-import healthzRoute from "../modules/health/healthz.route.js";
+import healthzRoute from "../modules/health/healthz.routes.js";
 import type { Route } from "./routes.types.js";
 import { authenticate } from "../utils/authenticate.js";
 import { resolveTenant } from "../utils/resolveTenant.js";
