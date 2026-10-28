@@ -8,8 +8,6 @@ const pgRegisteredPath = {
     'pg may only be imported inside packages/db and the two composition roots: "apps/api/app.*" "apps/index.*","apps/worker/src/main.*", Nothing else may import it directly.',
 };
 
-
-
 const tesseraDBRegisteredPatternAllowed = {
   group: ["**/packages/db/**", "!**/packages/db/public.**"],
   allowTypeImports: true,
@@ -142,6 +140,12 @@ export default defineConfig(
       "apps/index.*",
       "apps/worker/src/main.*",
     ],
+    rules: {
+      "no-restricted-imports": ["off"],
+    },
+  },
+  {
+    files: ["**/*.test.*"],
     rules: {
       "no-restricted-imports": ["off"],
     },
