@@ -31,7 +31,8 @@ const createDocument = async (tenantId: string, input: string) => {
 
       const documentId = await documentRepo.createDocument(input);
 
-      return await jobRepo.createJob(documentId, input);
+      await jobRepo.createJob(documentId, input);
+      return documentId;
     },
   );
 };
