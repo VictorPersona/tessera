@@ -1,5 +1,7 @@
-import { expect, test } from "vitest";
-import { withSystem } from "../packages/db/executor.js";
+import { afterAll, expect, test } from "vitest";
+import { closePool, withSystem } from "../packages/db/executor.js";
+
+afterAll(async () => await closePool());
 
 test("SMOKE TEST", async () => {
   await withSystem(async (executor) => {
