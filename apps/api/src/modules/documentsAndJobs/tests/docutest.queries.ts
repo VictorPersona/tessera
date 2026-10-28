@@ -6,3 +6,8 @@ export const DROP_JOBS_TEST_CONSTRAINT =
 
 export const CHECK_DOCUMENTS_TEST =
   "SELECT 1 FROM documents WHERE data='vitest_test_data'";
+
+export const REMOVE_JOBS_TEST = "DELETE FROM jobs WHERE tenant_id = $1";
+
+export const REMOVE_DOCUMENTS_TEST =
+  "DELETE FROM documents WHERE tenant_id = $1";
