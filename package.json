@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "build": "pnpm tsc --noEmit && swc apps -d dist",
     "start": "node dist/apps/index.js",
     "dev": "nodemon --watch apps --ext ts --exec \"pnpm build && pnpm start\"",
@@ -36,6 +36,7 @@
     "eslint": "^10.12.0",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.71.2",
-    "typescript7": "npm:typescript@^7.0.2"
+    "typescript7": "npm:typescript@^7.0.2",
+    "vitest": "^5.0.5"
   }
 }
