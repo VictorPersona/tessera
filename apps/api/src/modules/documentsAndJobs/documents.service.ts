@@ -1,8 +1,8 @@
 import type { TenantExecutor } from "../../../../../packages/db/executor.js";
 import publicDb from "../../../../../packages/db/public.db.js";
 import { AppError } from "../../utils/response.js";
-import jobsRepository from "../jobs/jobs.repository.js";
 import { documentRepository } from "./documents.repository.js";
+import jobsRepository from "./jobs.repository.js";
 
 const getDocument = async (tenantId: string, id: string) => {
   return await publicDb.withTenant(
