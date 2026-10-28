@@ -1,21 +1,31 @@
+import { randomUUID } from "crypto";
 import type { TenantExecutor } from "../../../../../packages/db/executor.js";
+import {
+  INSERT_INTO_DOCUMENTS,
+  SELECT_FROM_DOCUMENTS,
+} from "./documents.queries.js";
+import type { DocumentRow } from "./documents.types.js";
 
-export const documentRepository =(executor:TenantExecutor)=>{
+export const documentRepository = (executor: TenantExecutor) => {
+  const readDocument = async (
+    documentId: string,
+  ): Promise<DocumentRow | null> => {
+    const text = SELECT_FROM_DOCUMENTS;
+    const values = [documentId, executor.tenantId];
+    const result = (await executor.PoolClient.query<DocumentRow>(text, values))
+      .rows[0];
+    return result ?? null;
+  };
 
-const readDocument = async (documentId: string) => {
-  const text = 'SELECT * from documents where id=$1';
-  const values = [documentId];
- return await executor.PoolClient.query(text,values)
+  const createDocument = async (data: string): Promise<string> => {
+    const text = INSERT_INTO_DOCUMENTS;
+    const id = randomUUID();
+    const values = [id, executor.tenantId, data];
+    await executor.PoolClient.query(text, values);
+    return id;
+  };
+  return {
+    readDocument,
+    createDocument,
+  };
 };
-
-const createDocument = async(data:string)=>{
-  const text = 'INSERT into documents(data) values($1)';
-  const values = [data];
-  return await executor.PoolClient.query(text,values);
-}
-return {
-  readDocument,
-  createDocument
-}
-}
-
