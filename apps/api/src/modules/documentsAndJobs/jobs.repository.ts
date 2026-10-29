@@ -5,11 +5,16 @@ import { INSERT_INTO_JOBS } from "./jobs.queries.js";
 
 export default (executor: TenantExecutor) => {
   const createJob = async (documentId: string, data: string) => {
-    const text = INSERT_INTO_JOBS;
+    try {
+          const text = INSERT_INTO_JOBS;
     const id = randomUUID();
     const values = [id, executor.tenantId, documentId, data];
      await executor.PoolClient.query(text, values);
      return id;
+    } catch (error) {
+      executor.PGError(error)
+    }
+
   };
   return {
     createJob,

@@ -11,11 +11,17 @@ export const documentRepository = (executor: TenantExecutor) => {
   const readDocument = async (
     documentId: string,
   ): Promise<DocumentRow | null> => {
-    const text = SELECT_FROM_DOCUMENTS;
+ 
+
+    try {
+         const text = SELECT_FROM_DOCUMENTS;
     const values = [documentId, executor.tenantId];
     const result = (await executor.PoolClient.query<DocumentRow>(text, values))
       .rows[0];
     return result ?? null;
+    } catch (error) {
+      executor.PGError(error)
+    }
   };
 
   const createDocument = async (data: string): Promise<string> => {
