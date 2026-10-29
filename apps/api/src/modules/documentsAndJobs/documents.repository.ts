@@ -5,7 +5,7 @@ import {
   SELECT_FROM_DOCUMENTS,
 } from "./documents.queries.js";
 import type { DocumentRow } from "./documents.types.js";
-import { throwAppropriateError } from "../../../../../packages/db/postgres.errormapping.js";
+
 
 export const documentRepository = (executor: TenantExecutor) => {
   const readDocument = async (
@@ -26,7 +26,7 @@ export const documentRepository = (executor: TenantExecutor) => {
       await executor.PoolClient.query(text, values);
       return id;
     } catch (error) {
-      throwAppropriateError(error);
+        executor.PGError(error);
     }
   };
   return {

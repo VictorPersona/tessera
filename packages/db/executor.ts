@@ -1,4 +1,9 @@
 import { Pool, type PoolClient } from "pg";
+import {
+  checkIfCONNError,
+  throwAppropriateError,
+} from "./postgres.errormapping.js";
+import { ConnectionError } from "./postgres.classes.js";
 
 const TENANT_BRAND: unique symbol = Symbol("tenant");
 
@@ -8,13 +13,21 @@ export type TenantExecutor = {
   tenantId: string;
   readonly [TENANT_BRAND]: true;
   PoolClient: PoolClient;
+  PGError: (error: unknown) => never;
 };
 export type SystemExecutor = {
   PoolClient: PoolClient;
   readonly [SYSTEM_BRAND]: true;
 };
 const pool = new Pool();
-const createConnection = async () => await pool.connect();
+const createConnection = async () => {
+  try {
+   return await pool.connect();
+  } catch (error: unknown) {
+    if(checkIfCONNError(error))throw new ConnectionError({cause:error});
+    throw error
+  }
+};
 
 export const closePool = async () => await pool.end();
 
@@ -52,6 +65,7 @@ export const withTenant = async <T>(
     tenantId,
     [TENANT_BRAND]: true as const,
     PoolClient: await createConnection(),
+    PGError: throwAppropriateError,
   };
 
   return runTransaction(executor, transactionToRun);

@@ -2,6 +2,7 @@ import { DatabaseError } from "pg";
 import {
   ConflictError,
   ConnectionError,
+  PrivilegeError,
   RetryError,
 } from "./postgres.classes.js";
 
@@ -10,10 +11,19 @@ type Errorclass = new (options?: { cause?: unknown }) => Error;
 const PG_ERROR_CLASS_MAPPING = {
   "40001": RetryError,
   "40P01": RetryError,
-  "42501": ConnectionError,
+  "42501": PrivilegeError,
 } satisfies Record<PgErrorCode, Errorclass>;
 
-export const throwAppropriateError = (error: unknown) => {
+const CONNECTION_ERROR_CODES = new Set([
+  "ECONNREFUSED",
+  "ECONNRESET",
+  "EHOSTUNREACH",
+  "ENETUNREACH",
+  "ETIMEDOUT",
+]);
+
+export const throwAppropriateError = (error: unknown): never => {
+  if (checkIfCONNError(error)) throw new ConnectionError({ cause: error });
   if (error instanceof DatabaseError && error.code) {
     if (error.code == "23505") {
       throw new ConflictError(error.constraint ?? "unknown", { cause: error });
@@ -28,4 +38,13 @@ export const throwAppropriateError = (error: unknown) => {
   }
 
   throw error;
+};
+
+export const checkIfCONNError = (error: unknown): boolean => {
+  return (
+    error instanceof Error &&
+    "code" in error &&
+    typeof error.code === "string" &&
+    CONNECTION_ERROR_CODES.has(error.code)
+  );
 };
