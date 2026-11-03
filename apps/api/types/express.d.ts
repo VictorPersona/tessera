@@ -3,6 +3,7 @@ declare global {
     interface Request {
       user?: object;
       tenantId?: string;
+      requestId: string;
     }
   }
 }

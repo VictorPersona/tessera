@@ -9,8 +9,11 @@ import helmet from "helmet";
 
 import { AuthRouter, PublicRoutes } from "./routes.data.js";
 import { AppError } from "../utils/response.js";
+import { genReqId } from "../middlewares/requestId.middleware.js";
+import errMiddleware from "../middlewares/error.middleware.js";
 
 export const registerMiddlewares = (app: Application) => {
+  app.use(genReqId);
   app.use(helmet());
   app.use(json());
   for (const route of PublicRoutes) {
@@ -26,19 +29,5 @@ export const registerMiddlewares = (app: Application) => {
       next(error);
     }
   });
-  app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
-    if (err instanceof AppError) {
-      res.status(err.statusCode).json({
-        error: {
-          code: err.code,
-          message: err.message,
-        },
-      });
-    } else {
-      res
-        .status(500)
-        .json({ error: { code: "INTERNAL", message: "Something went wrong" } });
-      console.error(err);
-    }
-  });
+  app.use(errMiddleware);
 };
