@@ -1,8 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/response.js";
-import { ConflictError, RetryError, PrivilegeError, ConnectionError } from "../../../../packages/db/postgres.classes.js";
-
-
+import {
+  ConflictError,
+  RetryError,
+  PrivilegeError,
+  ConnectionError,
+} from "../../../../packages/db/public.errors.js";
 
 type ErrClass = new (...args: never[]) => Error;
 

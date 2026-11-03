@@ -145,6 +145,25 @@ export default defineConfig(
     },
   },
   {
+    files: ["apps/api/src/middlewares/error.middleware.*"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [pgRegisteredPath],
+          patterns: [
+            {
+              group: ["**/packages/db/**", "!**/packages/db/public.errors.*"],
+              allowTypeImports: true,
+              message:
+                "The error middleware may import only packages/db/public.errors from tessera/db.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: ["**/*.test.*"],
     rules: {
       "no-restricted-imports": ["off"],

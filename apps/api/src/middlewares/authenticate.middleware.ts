@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { AppError } from "./response.js";
+import { AppError } from "../utils/response.js";
 
 export const authenticate = (
   req: Request,

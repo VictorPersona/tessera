@@ -1,7 +1,7 @@
 import { Router } from "express";
 import healthzRoute from "../modules/health/healthz.routes.js";
 import type { Route } from "./routes.types.js";
-import { authenticate } from "../utils/authenticate.middleware.js";
+import { authenticate } from "../middlewares/authenticate.middleware.js";
 import { resolveTenant } from "../utils/resolveTenant.js";
 import documentsRoutes from "../modules/documentsAndJobs/documents.routes.js";
 
