@@ -22,6 +22,15 @@ const CONNECTION_ERROR_CODES = new Set([
   "ETIMEDOUT",
 ]);
 
+export const checkIfCONNError = (error: unknown): boolean => {
+  return (
+    error instanceof Error &&
+    "code" in error &&
+    typeof error.code === "string" &&
+    CONNECTION_ERROR_CODES.has(error.code)
+  );
+};
+
 export const throwAppropriateError = (error: unknown): never => {
   if (checkIfCONNError(error)) throw new ConnectionError({ cause: error });
   if (error instanceof DatabaseError && error.code) {
@@ -38,13 +47,4 @@ export const throwAppropriateError = (error: unknown): never => {
   }
 
   throw error;
-};
-
-export const checkIfCONNError = (error: unknown): boolean => {
-  return (
-    error instanceof Error &&
-    "code" in error &&
-    typeof error.code === "string" &&
-    CONNECTION_ERROR_CODES.has(error.code)
-  );
 };
