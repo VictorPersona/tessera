@@ -19,7 +19,7 @@ const makeFakes = () => {
     readDocument: async (id) => documents.find((d) => d.id === id) ?? null,
     createDocument: async (data) => {
       const id = `doc-${documents.length + 1}`;
-      documents.push({ id, tenant_id: "t1", data, created_at: null });
+      documents.push({ id, tenant_id: "t1", data, created_at: new Date() });
       return id;
     },
   };

@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 import type { TenantExecutor } from "../../../../../packages/db/executor.js";
 import {
   INSERT_INTO_DOCUMENTS,
