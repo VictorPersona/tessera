@@ -1,0 +1,16 @@
+{
+  "name": "@tessera/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@tessera/config": "workspace:*",
+    "@tessera/db": "workspace:*",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6"
+  }
+}

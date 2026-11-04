@@ -1,0 +1,10 @@
+{
+  "name": "@tessera/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@tessera/config": "workspace:*",
+    "@tessera/db": "workspace:*"
+  }
+}
