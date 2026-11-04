@@ -4,23 +4,21 @@ import {
   INSERT_INTO_DOCUMENTS,
   SELECT_FROM_DOCUMENTS,
 } from "./documents.queries.js";
-import type { DocumentRow } from "./documents.types.js";
+import type { DocumentRepository, DocumentRow } from "./documents.types.js";
 
-
-export const documentRepository = (executor: TenantExecutor) => {
+const documentRepository = (executor: TenantExecutor): DocumentRepository => {
   const readDocument = async (
     documentId: string,
   ): Promise<DocumentRow | null> => {
- 
-
     try {
-         const text = SELECT_FROM_DOCUMENTS;
-    const values = [documentId, executor.tenantId];
-    const result = (await executor.PoolClient.query<DocumentRow>(text, values))
-      .rows[0];
-    return result ?? null;
+      const text = SELECT_FROM_DOCUMENTS;
+      const values = [documentId, executor.tenantId];
+      const result = (
+        await executor.PoolClient.query<DocumentRow>(text, values)
+      ).rows[0];
+      return result ?? null;
     } catch (error) {
-      executor.PGError(error)
+      executor.PGError(error);
     }
   };
 
@@ -32,7 +30,7 @@ export const documentRepository = (executor: TenantExecutor) => {
       await executor.PoolClient.query(text, values);
       return id;
     } catch (error) {
-        executor.PGError(error);
+      executor.PGError(error);
     }
   };
   return {
@@ -40,3 +38,5 @@ export const documentRepository = (executor: TenantExecutor) => {
     createDocument,
   };
 };
+
+export default documentRepository;
