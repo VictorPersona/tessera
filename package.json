@@ -6,11 +6,15 @@
   "packageManager": "pnpm@10.17.1",
   "scripts": {
     "typecheck": "tsc -b && tsc -p tsconfig.typetests.json",
+    "lint": "eslint .",
+    "format:check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude",
+    "format": "prettier --write . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .git/info/exclude",
     "build": "tsc -b",
     "test": "tsc -b && vitest run",
+    "test:unit": "tsc -b && vitest run --project unit",
+    "test:integration": "tsc -b && vitest run --project integration",
     "start": "node apps/api/dist/index.js",
-    "dev": "nodemon --watch apps --watch packages --ignore \"**/dist/**\" --ext ts --exec \"pnpm build && pnpm start\"",
-    "lint": "eslint ."
+    "dev": "nodemon --watch apps --watch packages --ignore \"**/dist/**\" --ext ts --exec \"pnpm build && pnpm start\""
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -19,6 +23,7 @@
     "dotenv": "^18.0.7",
     "eslint": "^10.12.0",
     "nodemon": "^3.1.14",
+    "prettier": "^3.9.10",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.71.2",
     "typescript7": "npm:typescript@^7.0.2",

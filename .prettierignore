@@ -1,0 +1,4 @@
+# build output and generated files: never hand-formatted
+**/dist
+coverage
+pnpm-lock.yaml
