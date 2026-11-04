@@ -3,6 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/src/public.db.d.ts",
+      "default": "./dist/src/public.db.js"
+    },
+    "./errors": {
+      "types": "./dist/src/public.errors.d.ts",
+      "default": "./dist/src/public.errors.js"
+    }
+  },
   "dependencies": {
     "pg": "^8.23.1"
   },
