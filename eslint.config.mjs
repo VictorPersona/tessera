@@ -8,22 +8,23 @@ const pgRegisteredPath = {
     'pg may only be imported inside packages/db and the two composition roots: "apps/api/app.*" "apps/api/index.*","apps/worker/src/main.*", Nothing else may import it directly.',
 };
 
-const tesseraDBRegisteredPatternAllowed = {
-  group: ["**/packages/db/**", "!**/packages/db/public.**"],
+
+const tesseraDBRegisteredPattern = {
+  regex: "^@tessera/db(/.*)?$",
   allowTypeImports: true,
   message:
     "Imports from tessera/db may only be imported inside the service and query files. Nothing else may import it directly",
 };
 
-const tesseraDBRegisteredPattern = {
-  group: ["**/packages/db/**"],
-  allowTypeImports: true,
+
+const noRelativeIntoPackages = {
+  group: ["**/packages/**"],
   message:
-    "Imports from tessera/db may only be imported inside the service and query files. Nothing else may import it directly",
+    "Import a package by its name (@tessera/db, @tessera/config, ...), never by a relative path into packages/: that skips its package.json exports.",
 };
 
 export default defineConfig(
-  { ignores: ["dist/**/*"] },
+  { ignores: ["**/dist/**"] }, // 
   {
     files: ["**/*.{js,ts}"],
 
@@ -31,7 +32,7 @@ export default defineConfig(
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        projectService: true,
+        projectService: { allowDefaultProject: ["vitest.config.ts", "vitest.setup.ts"] },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -56,7 +57,7 @@ export default defineConfig(
         "error",
         {
           paths: [pgRegisteredPath],
-          patterns: [tesseraDBRegisteredPattern],
+          patterns: [tesseraDBRegisteredPattern, noRelativeIntoPackages],
         },
       ],
     },
@@ -78,6 +79,7 @@ export default defineConfig(
             },
 
             tesseraDBRegisteredPattern,
+            noRelativeIntoPackages,
           ],
         },
       ],
@@ -89,7 +91,7 @@ export default defineConfig(
       "no-restricted-imports": [
         "error",
         {
-          patterns: [tesseraDBRegisteredPatternAllowed],
+          patterns: [noRelativeIntoPackages],
         },
       ],
     },
@@ -115,6 +117,7 @@ export default defineConfig(
                 "please pass the data inside the functions to access them. Dependencies only point downward",
             },
             tesseraDBRegisteredPattern,
+            noRelativeIntoPackages,
           ],
         },
       ],
@@ -128,20 +131,21 @@ export default defineConfig(
         "error",
         {
           paths: [pgRegisteredPath],
-          patterns: [tesseraDBRegisteredPatternAllowed],
+          patterns: [noRelativeIntoPackages],
         },
       ],
     },
   },
   {
-    files: [
-      "**/packages/db/**/*",
-      "apps/api/app.*",
-      "apps/api/index.*",
-      "apps/worker/src/main.*",
-    ],
+    files: ["packages/db/**/*"],
     rules: {
       "no-restricted-imports": ["off"],
+    },
+  },
+  {
+    files: ["apps/api/app.*", "apps/api/index.*", "apps/worker/src/main.*"],
+    rules: {
+      "no-restricted-imports": ["error", { patterns: [noRelativeIntoPackages] }],
     },
   },
   {
@@ -153,11 +157,12 @@ export default defineConfig(
           paths: [pgRegisteredPath],
           patterns: [
             {
-              group: ["**/packages/db/**", "!**/packages/db/public.errors.*"],
+              regex: "^@tessera/db(?!/errors$)",
               allowTypeImports: true,
               message:
-                "The error middleware may import only packages/db/public.errors from tessera/db.",
+                "The error middleware may import only @tessera/db/errors from tessera/db.",
             },
+            noRelativeIntoPackages,
           ],
         },
       ],
