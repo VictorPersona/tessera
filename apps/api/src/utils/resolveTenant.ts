@@ -6,7 +6,7 @@ export const resolveTenant = (
   next: NextFunction,
 ) => {
   try {
-    req.tenantId = "StubTenantID";
+    req.tenantId = "deadbeef-dead-4bef-a555-deadbeefdead";
     next();
   } catch (error) {
     next(error);
