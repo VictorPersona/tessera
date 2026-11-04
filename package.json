@@ -5,16 +5,15 @@
   "type": "module",
   "packageManager": "pnpm@10.17.1",
   "scripts": {
-    "test": "vitest run",
-    "build": "pnpm tsc --noEmit && swc apps -d dist",
-    "start": "node dist/apps/api/index.js",
-    "dev": "nodemon --watch apps --ext ts --exec \"pnpm build && pnpm start\"",
+    "typecheck": "tsc -b && tsc -p tsconfig.typetests.json",
+    "build": "tsc -b",
+    "test": "tsc -b && vitest run",
+    "start": "node apps/api/dist/index.js",
+    "dev": "nodemon --watch apps --watch packages --ignore \"**/dist/**\" --ext ts --exec \"pnpm build && pnpm start\"",
     "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@swc/cli": "^0.8.1",
-    "@swc/core": "^1.16.13",
     "@types/node": "^26.6.5",
     "@typescript/typescript6": "^6.0.2",
     "dotenv": "^18.0.7",
