@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import { withSystem, type TenantExecutor } from "../executor.js";
+import { withSystem, type TenantExecutor } from "../src/executor.js";
 
 const createTenant = (
   tenantDetails: { name: string },

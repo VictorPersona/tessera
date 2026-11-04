@@ -1,13 +1,15 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto"; // CHANGED: node:crypto, as everywhere else
 import { afterAll, expect, test } from "vitest";
-import documentsService from "../../../apps/api/src/modules/documentsAndJobs/documents.service.js";
+import documentsService from "../documents.service.js";
 import {
   ADD_JOBS_TEST_DUPLICATE_CONSTRAINT,
   DELETE_REPTATIVE_DATA_ROWS,
   DROP_JOBS_TEST_DUPLICATE_CONSTRAINT,
-} from "../../../apps/api/src/modules/documentsAndJobs/tests/docutest.queries.js";
-import { closePool, withSystem } from "../executor.js";
-import { ConflictError } from "../postgres.classes.js";
+} from "./docutest.queries.js";
+import publicDb, { closePool } from "@tessera/db"; // CHANGED: by package name
+import { ConflictError } from "@tessera/db/errors";
+
+const { withSystem } = publicDb;
 
 afterAll(async () => await closePool());
 

@@ -5,7 +5,7 @@ import {
   RetryError,
   PrivilegeError,
   ConnectionError,
-} from "../../../../packages/db/public.errors.js";
+} from "@tessera/db/errors"; 
 
 type ErrClass = new (...args: never[]) => Error;
 

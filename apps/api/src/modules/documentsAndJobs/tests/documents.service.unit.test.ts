@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { TenantExecutor } from "../../../../../../packages/db/executor.js";
+import type { TenantExecutor } from "@tessera/db"; 
 import { makeDocumentsService } from "../documents.service.js";
 import type { DocumentRepository, DocumentRow } from "../documents.types.js";
 import type { JobsRepository } from "../jobs.types.js";

@@ -7,7 +7,7 @@ import {
   ConnectionError,
   PrivilegeError,
   RetryError,
-} from "../../../../../packages/db/public.errors.js";
+} from "@tessera/db/errors"; 
 
 const requestId = "test-request-id";
 

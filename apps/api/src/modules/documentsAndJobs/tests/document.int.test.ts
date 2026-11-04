@@ -1,9 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { afterAll, expect, test } from "vitest";
-import {
-  closePool,
-  withSystem,
-} from "../../../../../../packages/db/executor.js";
+import publicDb, { closePool } from "@tessera/db"; 
 import documentsService from "../documents.service.js";
 import {
   ADD_JOBS_TEST_CONSTRAINT,
@@ -12,6 +9,8 @@ import {
   REMOVE_DOCUMENTS_TEST,
   REMOVE_JOBS_TEST,
 } from "./docutest.queries.js";
+
+const { withSystem } = publicDb;
 
 afterAll(async () => await closePool());
 

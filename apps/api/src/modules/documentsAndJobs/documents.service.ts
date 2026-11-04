@@ -1,5 +1,5 @@
-import type { TenantExecutor } from "../../../../../packages/db/executor.js";
-import publicDb from "../../../../../packages/db/public.db.js";
+import type { TenantExecutor } from "@tessera/db"; 
+import publicDb from "@tessera/db"; // 
 import { AppError } from "../../utils/response.js";
 import documentRepository from "./documents.repository.js";
 import type { DocumentRepository } from "./documents.types.js";

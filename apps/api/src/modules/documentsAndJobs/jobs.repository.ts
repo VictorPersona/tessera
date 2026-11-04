@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { TenantExecutor } from "../../../../../packages/db/executor.js";
+import type { TenantExecutor } from "@tessera/db"; 
 import { INSERT_INTO_JOBS } from "./jobs.queries.js";
 import type { JobsRepository } from "./jobs.types.js";
 

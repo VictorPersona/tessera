@@ -6,8 +6,8 @@ import {
   PrivilegeError,
   RetryError,
   shouldRetry,
-} from "../public.errors.js";
-import { throwAppropriateError } from "../postgres.errormapping.js";
+} from "../src/public.errors.js";
+import { throwAppropriateError } from "../src/postgres.errormapping.js";
 
 class ValidationError extends Error {}
 
