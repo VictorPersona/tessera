@@ -6,7 +6,6 @@ Accepted
 
 ## Context
 
-
 - Tessera is multi-tenant: every tenant's rows live in the same tables. A query
   that runs without the tenant set can read or change another tenant's data.
   Nothing fails loudly when this happens; the response looks normal, and the
@@ -25,8 +24,6 @@ Accepted
 - The SQL this project depends on (`SET LOCAL`, `FOR UPDATE SKIP LOCKED`,
   `ON CONFLICT`) has to be visible and explainable, not generated behind an
   abstraction.
-
-
 
 ## Decision
 
@@ -65,10 +62,10 @@ reach the pool itself.
 **Error translation:** not decided here. Repositories currently let `pg`
 errors pass through unchanged; typed error translation is Stage 00.5.
 
-
 ## Consequences
 
 **What we gave up**
+
 - No typed query results. `query()` returns rows the compiler knows nothing
   about, so a typo in a column name or a changed schema shows up at runtime,
   not at build time. Row types have to be written and kept in sync by hand.
@@ -85,6 +82,7 @@ errors pass through unchanged; typed error translation is Stage 00.5.
 - More code than an ORM: every query, mapping and join is written by hand.
 
 **What we get**
+
 - Every statement is visible SQL, including `SET LOCAL` and the locking
   clauses once they arrive.
 - A repository can't run a query outside a scope: it has no pool to reach,

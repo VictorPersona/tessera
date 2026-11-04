@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { afterAll, expect, test } from "vitest";
-import publicDb, { closePool } from "@tessera/db"; 
+import publicDb, { closePool } from "@tessera/db";
 import documentsService from "../documents.service.js";
 import {
   ADD_JOBS_TEST_CONSTRAINT,

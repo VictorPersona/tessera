@@ -8,14 +8,12 @@ const pgRegisteredPath = {
     'pg may only be imported inside packages/db and the two composition roots: "apps/api/app.*" "apps/api/index.*","apps/worker/src/main.*", Nothing else may import it directly.',
 };
 
-
 const tesseraDBRegisteredPattern = {
   regex: "^@tessera/db(/.*)?$",
   allowTypeImports: true,
   message:
     "Imports from tessera/db may only be imported inside the service and query files. Nothing else may import it directly",
 };
-
 
 const noRelativeIntoPackages = {
   group: ["**/packages/**"],
@@ -24,7 +22,7 @@ const noRelativeIntoPackages = {
 };
 
 export default defineConfig(
-  { ignores: ["**/dist/**"] }, // 
+  { ignores: ["**/dist/**"] }, //
   {
     files: ["**/*.{js,ts}"],
 
@@ -32,7 +30,9 @@ export default defineConfig(
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        projectService: { allowDefaultProject: ["vitest.config.ts", "vitest.setup.ts"] },
+        projectService: {
+          allowDefaultProject: ["vitest.config.ts", "vitest.setup.ts"],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -145,7 +145,10 @@ export default defineConfig(
   {
     files: ["apps/api/app.*", "apps/api/index.*", "apps/worker/src/main.*"],
     rules: {
-      "no-restricted-imports": ["error", { patterns: [noRelativeIntoPackages] }],
+      "no-restricted-imports": [
+        "error",
+        { patterns: [noRelativeIntoPackages] },
+      ],
     },
   },
   {

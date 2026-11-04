@@ -1,5 +1,4 @@
 {
-
   "compilerOptions": {
     "module": "nodenext",
     "target": "esnext",

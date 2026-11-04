@@ -1,1 +1,2 @@
-export const INSERT_INTO_JOBS = 'INSERT into jobs(id,tenant_id,document_id,data) values($1,$2,$3,$4)'
+export const INSERT_INTO_JOBS =
+  "INSERT into jobs(id,tenant_id,document_id,data) values($1,$2,$3,$4)";

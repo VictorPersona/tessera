@@ -2,5 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": { "rootDir": ".", "outDir": "dist" },
   "include": ["index.ts", "app.ts", "src", "types"],
-  "references": [{ "path": "../../packages/db" }, { "path": "../../packages/config" }]
+  "references": [
+    { "path": "../../packages/db" },
+    { "path": "../../packages/config" }
+  ]
 }

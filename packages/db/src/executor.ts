@@ -22,10 +22,10 @@ export type SystemExecutor = {
 const pool = new Pool();
 const createConnection = async () => {
   try {
-   return await pool.connect();
+    return await pool.connect();
   } catch (error: unknown) {
-    if(checkIfCONNError(error))throw new ConnectionError({cause:error});
-    throw error
+    if (checkIfCONNError(error)) throw new ConnectionError({ cause: error });
+    throw error;
   }
 };
 
