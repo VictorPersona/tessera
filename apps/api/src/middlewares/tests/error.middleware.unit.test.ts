@@ -11,17 +11,14 @@ import {
 
 const requestId = "test-request-id";
 
-// Calls the middleware the way Express would, with a fake req and res.
-// No server, no database.
 const callMiddleware = (err: unknown) => {
   const req = { requestId } as Request;
-  // mockReturnThis: res.status(409) returns res, so .json() can chain.
+
   const res = { status: vi.fn().mockReturnThis(), json: vi.fn() };
   errMiddleware(err, req, res as unknown as Response, vi.fn() as NextFunction);
   return res;
 };
 
-// Keeps the test output clean and lets us check what was logged.
 const logSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 afterEach(() => logSpy.mockClear());
 
