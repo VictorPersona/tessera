@@ -1,4 +1,5 @@
 {
-  "extends": "./tsconfig.json",
-  "include": ["**/*.typetest.*"]
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": { "composite": false, "noEmit": true },
+  "include": ["apps/**/*.typetest.ts", "packages/**/*.typetest.ts"]
 }
