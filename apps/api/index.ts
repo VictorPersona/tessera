@@ -1,6 +1,3 @@
-import { config } from "dotenv";
+import { StartServer } from "./app.js";
 
-config();
-const appModule = await import("./app.js");
-
-await appModule.StartServer();
+await StartServer();

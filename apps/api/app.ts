@@ -1,11 +1,12 @@
+import { config } from "@tessera/config"; 
 import express from "express";
 import { registerMiddlewares } from "./src/routes/routes.js";
 export const StartServer = async () => {
   try {
     const app = express();
     registerMiddlewares(app);
-    app.listen(process.env.PORT, () => {
-      console.log(`Server started at PORT: ${process.env.PORT}`);
+    app.listen(config.PORT, () => {
+      console.log(`Server started at PORT: ${config.PORT}`);
     });
   } catch (error) {
     console.error(error);
