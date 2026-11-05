@@ -31,7 +31,7 @@ export default defineConfig(
       parser: tseslint.parser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: ["vitest.config.ts", "vitest.setup.ts"],
+          allowDefaultProject: ["vitest.config.ts"],
         },
         tsconfigRootDir: import.meta.dirname,
       },

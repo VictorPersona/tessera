@@ -2,7 +2,6 @@ import { config as loadDotenv } from "dotenv";
 import { parseConfig } from "./parseConfig.js";
 import type { Config } from "./schema.js";
 
-
 loadDotenv({ quiet: true });
 
 const result = parseConfig(process.env);

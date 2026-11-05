@@ -1,3 +1,4 @@
+import { config } from "@tessera/config"; // ADDED
 import { Pool, type PoolClient } from "pg";
 import {
   checkIfCONNError,
@@ -19,7 +20,12 @@ export type SystemExecutor = {
   PoolClient: PoolClient;
   readonly [SYSTEM_BRAND]: true;
 };
-const pool = new Pool();
+
+const pool = new Pool({
+  connectionString: config.DATABASE_URL,
+  max: config.DATABASE_POOL_MAX,
+  application_name: config.DATABASE_APP_NAME ?? "tessera-api",
+});
 const createConnection = async () => {
   try {
     return await pool.connect();

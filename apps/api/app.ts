@@ -1,4 +1,4 @@
-import { config } from "@tessera/config"; 
+import { config } from "@tessera/config";
 import express from "express";
 import { registerMiddlewares } from "./src/routes/routes.js";
 export const StartServer = async () => {
