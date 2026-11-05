@@ -177,4 +177,19 @@ export default defineConfig(
       "no-restricted-imports": ["off"],
     },
   },
+  {
+    files: ["**/*.{js,mjs,ts}"],
+    ignores: ["packages/config/**"],
+    rules: {
+      "no-restricted-properties": [
+        "error",
+        {
+          object: "process",
+          property: "env",
+          message:
+            "Read config from @tessera/config. Only packages/config may touch process.env.",
+        },
+      ],
+    },
+  },
 );
