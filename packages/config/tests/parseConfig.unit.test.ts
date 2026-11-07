@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseConfig } from "../src/parseConfig.js";
 
-
 const minimal = {
   DATABASE_URL: "postgres://user:pw@localhost:5432/tessera",
   S3_ACCESS_KEY_ID: "id",
@@ -60,7 +59,6 @@ describe("parseConfig", () => {
     expect(errorsOf({ ...minimal, PORT: "0" })[0]).toMatch(/^PORT: /);
     expect(errorsOf({ ...minimal, PORT: "65536" })[0]).toMatch(/^PORT: /);
   });
-
 
   it.each([
     ["false", false],
